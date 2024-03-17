@@ -1,4 +1,9 @@
-var http = require('http');
+let http = require('http');
+let fs = require('fs');
+
+let htmlPay = fs.readFileSync(
+    "./res/pay.html"
+);
 
 console.log("created");
 
@@ -6,12 +11,10 @@ http.createServer(function (req, res) {
 
     res.writeHead(
         200,
-        { 'Content-Type': 'application/json' }
+        { 'Content-Type': 'text/html' }
     );
 
-    res.end(
-        JSON.stringify({
-            parent: "Hello world!"
-        })
-    );
+    res.write(htmlPay);
+
+    res.end();
 }).listen(8080);
