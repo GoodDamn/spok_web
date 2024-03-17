@@ -22,8 +22,11 @@ http.createServer(function (req, res) {
     }
 
     if (req.url === "/createOrder") {
-        config.createPayment((paymentRes) => {
-            res.end(JSON.stringify(paymentRes.data));
+        config.createPayment((_, confirm_url) => {
+            res.writeHead(302, {
+                'Location': confirm_url
+            });
+            res.end();
         });
         return;
     }
