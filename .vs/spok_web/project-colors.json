@@ -5,6 +5,11 @@
       "ProjectGuid": "e8c8bde7-f7ac-4b1c-87dc-4c0505f1df9f",
       "DisplayName": "spok_web",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1

@@ -21,6 +21,8 @@ http.createServer(function (req, res) {
         return;
     }
 
+    console.log(req.url);
+
     if (req.url === "/createOrder") {
         config.createPayment((_, confirm_url) => {
             res.writeHead(302, {
