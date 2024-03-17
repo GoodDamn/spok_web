@@ -1,0 +1,3 @@
+F:\VS Projs\spok_web\spok_web\obj\Debug\spok_web.njsproj.AssemblyReference.cache
+F:\VS Projs\spok_web\spok_web\obj\Debug\spok_web.njsproj.CoreCompileInputs.cache
+F:\VS Projs\spok_web\spok_web\bin\Microsoft.NodejsTools.WebRole.dll

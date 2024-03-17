@@ -1,0 +1,9 @@
+{
+  "name": "spok_web",
+  "version": "0.0.0",
+  "description": "spok_web",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
