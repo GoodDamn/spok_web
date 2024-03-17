@@ -8,11 +8,11 @@ let htmlPay = fs.readFileSync(
 
 console.log("created");
 
-config.database.set(
+/*config.database.set(
     config.refUsers, {
         shit: "asdasdasdsad",
         shit2: "adasdsadsadasdsa"
-});
+});*/
 
 http.createServer(function (req, res) {
 
@@ -21,6 +21,12 @@ http.createServer(function (req, res) {
         return;
     }
 
+    if (req.url === "/createOrder") {
+        config.createPayment((paymentRes) => {
+            res.end(JSON.stringify(paymentRes.data));
+        });
+        return;
+    }
 
     res.writeHead(
         200,
