@@ -31,17 +31,20 @@ http.createServer(function (req, res) {
         return;
     }
 
+    resText(res, "Hello");
+    
+}).listen(8080);
+
+function resText(res, text) {
     res.writeHead(
         200,
         { 'Content-Type': 'text/plain' }
     );
 
-    res.write("Hello");
+    res.write(text);
 
     res.end();
-    
-}).listen(8080);
-
+}
 
 function resHtml(res, html) {
     res.writeHead(
