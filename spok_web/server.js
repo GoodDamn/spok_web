@@ -1,5 +1,6 @@
 let http = require('http');
 let fs = require('fs');
+let config = require('./apis/config');
 
 let htmlPay = fs.readFileSync(
     "./res/pay.html"
@@ -7,12 +8,19 @@ let htmlPay = fs.readFileSync(
 
 console.log("created");
 
+config.database.set(
+    config.refUsers, {
+        shit: "asdasdasdsad",
+        shit2: "adasdsadsadasdsa"
+});
+
 http.createServer(function (req, res) {
 
     if (req.url === "/pay") {
         resHtml(res, htmlPay);
         return;
     }
+
 
     res.writeHead(
         200,
