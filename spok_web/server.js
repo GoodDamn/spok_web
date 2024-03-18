@@ -3,7 +3,7 @@ let fs = require('fs');
 let config = require('./apis/config');
 
 let htmlPay = fs.readFileSync(
-    "./res/pay.html"
+    "./spok_web/res/pay.html"
 );
 
 console.log("created");
@@ -14,26 +14,36 @@ console.log("created");
         shit2: "adasdsadsadasdsa"
 });*/
 
-http.createServer(function (req, res) {
+var router = new Map();
 
-    if (req.url === "/pay") {
-        resHtml(res, htmlPay);
-        return;
-    }
+router.set("/pay", (res) => {
+    resHtml(res, htmlPay);
+})
 
-    console.log(req.url);
-
-    if (req.url === "/createOrder") {
-        config.createPayment((_, confirm_url) => {
-            res.writeHead(302, {
-                'Location': confirm_url
-            });
-            res.end();
+router.set("/createOrder", (res) => {
+    res.end("order");
+    config.createPayment((_, confirm_url) => {
+        res.writeHead(302, {
+            'Location': confirm_url
         });
+        res.end();
+    });
+});
+
+http.createServer(function (req, res) {
+    
+    let node = router.get(
+        req.url
+    );
+
+    console.log(req.url, node);
+
+    if (node == undefined) {
+        resText(res, "Hello");
         return;
     }
 
-    resText(res, "Hello");
+    node(res);
     
 }).listen(8080);
 
