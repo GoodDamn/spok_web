@@ -3,20 +3,39 @@
 
     <style>
 
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+        
         body {
             background-color: #08193A;
         }
 
+        #btnGetDiv {
+            justify-content: center;
+            display: flex;
+        }
+
         #btnGet {
-            width: 20vw;
-            height: 15vh;
+            position: absolute;
             color: #ffffff;
+            cursor: pointer;
+            background-color: #4F66E8;
+            padding: 5vh;
+            border-radius: 3vh;
+            font-family: "Open Sans", sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 5vh;
+            text-decoration: none;
+            margin-top: 60vh;
         }
 
         #btnSignIn {
+            position: absolute;
             color: #ffffff;
-            background-color: #4f5482;
+            background-color: #4F66E8;
+            cursor: pointer;
         }
+
     </style>
 
     
@@ -26,18 +45,17 @@
 
     <button id="btnSignIn">Sign In With Apple</button>
 
-    <a id="btnGet" href="http://127.0.0.1:8080/createOrder" class="button">
-        Create order
-    </a>
+    <div id="btnGetDiv">
+        <a id="btnGet" href="http://localhost:8080/createOrder">
+            Получить полный доступ
+        </a>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
 
     <script type="module">
         // https://firebase.google.com/docs/web/setup#available-libraries
-
-        //import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        //import { getAuth, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js"
 
         function onSign(auth, provider) {
             auth.signInWithPopup(provider)
