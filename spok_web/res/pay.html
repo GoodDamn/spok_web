@@ -17,8 +17,9 @@
             color: #ffffff;
             background-color: #4f5482;
         }
-
     </style>
+
+    
 
 </head>
 <body>
@@ -29,5 +30,58 @@
         Create order
     </a>
 
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+
+    <script type="module">
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        //import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        //import { getAuth, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js"
+
+        function onSign(auth, provider) {
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    let credential = result.credential;
+                    console.log(credential, result.user);
+
+                }).catch((error) => {
+                    let errorCode = error.code;
+                    console.log(error, error.code);
+                });
+        }
+
+        window.onload = function () {
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyB2sJKaPgcsZObdtKPQ-ZI5oSmXapz7OIQ",
+                authDomain: "localhost",
+            }
+
+            const app = firebase.initializeApp(
+                firebaseConfig
+            );
+
+            const auth = app.auth();
+
+            let provider = new firebase.auth.OAuthProvider(
+                'apple.com'
+            );
+
+            provider.addScope('email');
+            provider.addScope('name');
+
+            provider.setCustomParameters({
+                locale: 'ru'
+            });
+
+            document.getElementById('btnSignIn')
+                .addEventListener('click', () => {
+                    onSign(auth, provider);
+                });
+
+        }
+
+    </script>
 
 </body>
