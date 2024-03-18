@@ -6,6 +6,10 @@ let htmlPay = fs.readFileSync(
     "./res/pay.html"
 );
 
+let meditatePng = fs.readFileSync(
+    "./res/meditate.png"
+);
+
 console.log("created");
 
 /*config.database.set(
@@ -29,8 +33,15 @@ router.set("/createOrder", (res) => {
     });
 });
 
+router.set("/meditate.png", (res) => {
+    res.write(meditatePng);
+    res.end();
+})
+
 http.createServer(function (req, res) {
-    
+
+    console.log(req.url);
+
     let node = router.get(
         req.url
     );
