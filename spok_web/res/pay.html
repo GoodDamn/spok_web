@@ -30,11 +30,6 @@
             width: 40vh;
             height: 33vh;
             margin-top: 29vh;
-            transition: all 200ms ease-in-out;
-        }
-
-        #mainDivImage:hover {
-            transform: scale(1.1);
         }
 
         #mainDivBtnGet {
@@ -65,9 +60,7 @@
         }
 
     </style>
-
     
-
 </head>
 <body>
 
@@ -97,8 +90,8 @@
             auth.signInWithPopup(provider)
                 .then((result) => {
                     let credential = result.credential;
-                    console.log(credential, result.user);
-
+                    console.log(result.user);
+                    console.log(credential);
                 }).catch((error) => {
                     let errorCode = error.code;
                     console.log(error, error.code);
@@ -109,7 +102,7 @@
 
             const firebaseConfig = {
                 apiKey: "AIzaSyB2sJKaPgcsZObdtKPQ-ZI5oSmXapz7OIQ",
-                authDomain: "localhost",
+                authDomain: "spok-relax-app.firebaseapp.com",
             }
 
             const app = firebase.initializeApp(
