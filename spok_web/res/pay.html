@@ -9,9 +9,20 @@
             background-color: #08193A;
         }
 
-        #btnGetDiv {
+        #mainDiv {
             justify-content: center;
             display: flex;
+        }
+
+        #mainDivTitle {
+            position: absolute;
+            color: #ffffff;
+            text-align: center;
+            font-family: "Open Sans", sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 5vh;
+            margin-top: 10vh;
         }
 
         #btnGet {
@@ -24,7 +35,7 @@
             font-family: "Open Sans", sans-serif;
             font-style: normal;
             font-weight: 700;
-            font-size: 5vh;
+            font-size: 4vh;
             text-decoration: none;
             margin-top: 60vh;
         }
@@ -45,7 +56,13 @@
 
     <button id="btnSignIn">Sign In With Apple</button>
 
-    <div id="btnGetDiv">
+    <div id="mainDiv">
+
+        <h1 id="mainDivTitle">
+            Подписка SPOK на 1 месяц <br>
+            169 RUB
+        </h1>
+
         <a id="btnGet" href="http://localhost:8080/createOrder">
             Получить полный доступ
         </a>
