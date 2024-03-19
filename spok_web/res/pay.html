@@ -93,21 +93,14 @@
         ) {
             auth.signInWithPopup(provider)
                 .then((result) => {
-                    let credential = result.credential;
-                    console.log("success:" + JSON.stringify(result.user,null,4));
                 }).catch((error) => {
-                    let errorCode = error.code;
-                    console.log("error:",error, error.code);
+                    alert("Что-то пошло не так: " + error.code + " " + error.message);
                 });
         }
 
         function onAuthStateChanged(
             user
         ) {
-            console.log(
-                "currentUser: " + JSON.stringify(user, null, 4)
-            );
-
             if (user == null) {
                 document
                     .body
@@ -118,7 +111,7 @@
 
             window
                 .location
-                .href = "http://localhost:8080/createOrder";
+                .href = "http://localhost:8080/createOrder?id=" + user.uid;
         }
 
         window.onload = function () {
