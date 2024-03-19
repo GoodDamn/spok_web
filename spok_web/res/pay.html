@@ -7,6 +7,7 @@
         
         body {
             background-color: #08193A;
+            visibility: hidden;
         }
 
         #mainDiv {
@@ -86,16 +87,38 @@
     <script type="module">
         // https://firebase.google.com/docs/web/setup#available-libraries
 
-        function onSign(auth, provider) {
+        function onSign(
+            auth,
+            provider
+        ) {
             auth.signInWithPopup(provider)
                 .then((result) => {
                     let credential = result.credential;
-                    console.log(result.user);
-                    console.log(credential);
+                    console.log("success:" + JSON.stringify(result.user,null,4));
                 }).catch((error) => {
                     let errorCode = error.code;
-                    console.log(error, error.code);
+                    console.log("error:",error, error.code);
                 });
+        }
+
+        function onAuthStateChanged(
+            user
+        ) {
+            console.log(
+                "currentUser: " + JSON.stringify(user, null, 4)
+            );
+
+            if (user == null) {
+                document
+                    .body
+                    .style
+                    .visibility = 'visible';
+                return;
+            }
+
+            window
+                .location
+                .href = "http://localhost:8080/createOrder";
         }
 
         window.onload = function () {
@@ -110,6 +133,10 @@
             );
 
             const auth = app.auth();
+
+            auth.onAuthStateChanged(
+                onAuthStateChanged
+            );
 
             let provider = new firebase.auth.OAuthProvider(
                 'apple.com'
