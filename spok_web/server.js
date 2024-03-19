@@ -20,12 +20,15 @@ console.log("created");
 
 let router = new Map();
 
-router.set("/pay", (res) => {
+router.set("/pay", (res, url) => {
     resHtml(res, htmlPay);
 })
 
-router.set("/createOrder", (res) => {
-    config.createPayment((_, confirm_url) => {
+router.set("/createOrder", (res, url) => {
+    let params = url.searchParams;
+    let userId = params.get('id');
+
+    config.createPayment(userId,(_, confirm_url) => {
         res.writeHead(302, {
             'Location': confirm_url
         });
@@ -33,17 +36,21 @@ router.set("/createOrder", (res) => {
     });
 });
 
-router.set("/meditate.png", (res) => {
+router.set("/meditate.png", (res, _) => {
     res.write(meditatePng);
     res.end();
 })
 
 http.createServer(function (req, res) {
 
-    console.log(req.url);
+    let url = new URL(
+        "http://s.c" + req.url
+    );
+
+    console.log(url.pathname);
 
     let node = router.get(
-        req.url
+        url.pathname
     );
 
     if (node == undefined) {
@@ -51,7 +58,7 @@ http.createServer(function (req, res) {
         return;
     }
 
-    node(res);
+    node(res, url);
     
 }).listen(8080);
 
