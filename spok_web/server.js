@@ -12,12 +12,6 @@ let meditatePng = fs.readFileSync(
 
 console.log("created");
 
-/*config.database.set(
-    config.refUsers, {
-        shit: "asdasdasdsad",
-        shit2: "adasdsadsadasdsa"
-});*/
-
 let router = new Map();
 
 router.set("/pay", (res, url) => {
@@ -27,13 +21,29 @@ router.set("/pay", (res, url) => {
 router.set("/createOrder", (res, url) => {
     let params = url.searchParams;
     let userId = params.get('id');
+    
+    if (userId == undefined || userId.length < 15) {
+        res.end();
+        return;
+    }
 
-    config.createPayment(userId,(_, confirm_url) => {
+    config.createPayment(userId, (orderId, confirm_url) => {
+
+        config.setUserData(
+            userId,{
+                "pteid": orderId
+            }
+        );
+
         res.writeHead(302, {
             'Location': confirm_url
         });
         res.end();
     });
+});
+
+router.set("/returnPayment", (res, url) => {
+    res.end();
 });
 
 router.set("/meditate.png", (res, _) => {
