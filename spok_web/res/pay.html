@@ -53,19 +53,10 @@
             transform: scale(1.1);
         }
 
-        #btnSignIn {
-            position: absolute;
-            color: #ffffff;
-            background-color: #4F66E8;
-            cursor: pointer;
-        }
-
     </style>
     
 </head>
 <body>
-
-    <button id="btnSignIn">Sign In With Apple</button>
 
     <div id="mainDiv">
 
@@ -76,7 +67,7 @@
 
         <img id="mainDivImage" src="meditate.png"/>
 
-        <a id="mainDivBtnGet" href="http://localhost:8080/createOrder">
+        <a id="mainDivBtnGet">
             Получить полный доступ
         </a>
     </div>
@@ -111,7 +102,7 @@
 
             window
                 .location
-                .href = "http://localhost:8080/createOrder?id=" + user.uid;
+                .href = "createOrder?id=" + user.uid;
         }
 
         window.onload = function () {
@@ -142,7 +133,7 @@
                 locale: 'ru'
             });
 
-            document.getElementById('btnSignIn')
+            document.getElementById('mainDivBtnGet')
                 .addEventListener('click', () => {
                     onSign(auth, provider);
                 });
