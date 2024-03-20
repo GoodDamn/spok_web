@@ -2,6 +2,15 @@ let http = require('http');
 let fs = require('fs');
 let config = require('./apis/config');
 
+
+let tls;
+try {
+    tls = require('node:tls');
+} catch (err) {
+    console.error('TLS not supported');
+}
+
+
 let htmlPay = fs.readFileSync(
     "./res/pay.html"
 );
