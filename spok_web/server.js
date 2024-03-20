@@ -27,7 +27,7 @@ router.set("/createOrder", (res, url) => {
         return;
     }
 
-    config.createPayment(userId, (orderId, confirm_url) => {
+    config.createPayment(url.host, (orderId, confirm_url) => {
 
         config.setUserData(
             userId,{
@@ -57,9 +57,7 @@ http.createServer(function (req, res) {
         "http://"+req.rawHeaders[1] + req.url
     );
 
-    console.log(url.host);
-
-    console.log(url.pathname);
+    console.log(url.host, url.pathname);
 
     let node = router.get(
         url.pathname
