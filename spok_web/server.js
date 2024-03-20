@@ -54,8 +54,10 @@ router.set("/meditate.png", (res, _) => {
 http.createServer(function (req, res) {
 
     let url = new URL(
-        "http://s.c" + req.url
+        "http://"+req.rawHeaders[1] + req.url
     );
+
+    console.log(url.host);
 
     console.log(url.pathname);
 
