@@ -52,6 +52,21 @@
             #mainDivBtnGet:hover {
                 transform: scale(1.1);
             }
+
+            #mainDivPolicy {
+                color: #ffffff;
+                font-family: "Open Sans", sans-serif;
+                font-style: normal;
+                font-weight: 500;
+            }
+
+            #mainDivTerms {
+                color: #ffffff;
+                font-family: "Open Sans", sans-serif;
+                font-style: normal;
+                font-weight: 500;
+            }
+
         </style>
     </head>
     <body>
@@ -68,11 +83,19 @@
             <a id="mainDivBtnGet">
                 Получить полный доступ
             </a>
+
+            <a id="mainDivTerms" href="/terms">
+                Условия пользования
+            </a>
+
+            <a id="mainDivPolicy" href="/policy">
+                Политика конфиденциальности
+            </a>
         </div>
     
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
-    
+
         <script type="module">
             // https://firebase.google.com/docs/web/setup#available-libraries
 

@@ -29,6 +29,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="res\favicon.ico" />
+    <Content Include="res\html\terms.html" />
+    <Content Include="res\html\policy.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="res\html\returnPayment.html" />
     <Content Include="res\js\pay.js">
       <SubType>Code</SubType>
