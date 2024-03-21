@@ -119,7 +119,7 @@ function resText(res, text) {
 function resHtml(res, html) {
     res.writeHead(
         200,
-        { 'Content-Type': 'text/html; charset=UTF-8;' }
+        { 'Content-Type': 'text/html; charset=utf-8;' }
     );
     res.end(html);
 }
