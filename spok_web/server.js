@@ -10,9 +10,12 @@ try {
     console.error('TLS not supported');
 }
 
-
 let htmlPay = fs.readFileSync(
     "./res/pay.html"
+);
+
+let htmlReturnPayment = fs.readFileSync(
+    "./res/returnPayment.html"
 );
 
 let meditatePng = fs.readFileSync(
@@ -52,7 +55,7 @@ router.set("/createOrder", (res, url) => {
 });
 
 router.set("/returnPayment", (res, url) => {
-    res.end();
+    res.end(htmlReturnPayment);
 });
 
 router.set("/meditate.png", (res, _) => {
