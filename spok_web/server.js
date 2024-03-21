@@ -26,6 +26,15 @@ let favicon = fs.readFileSync(
     "./res/favicon.ico"
 );
 
+let ssl = {
+    key: fs.readFileSync(
+        "./ssl/key"
+    ),
+    cert: fs.readFileSync(
+        "./ssl/cert"
+    )
+};
+
 console.log("created");
 
 let router = new Map();
@@ -78,7 +87,7 @@ router.set("/favicon.ico", (res, _) => {
     res.end(favicon);
 });
 
-http.createServer(function (req, res) {
+https.createServer(ssl,function (req, res) {
 
     let url = new URL(
         "http://"+req.rawHeaders[1] + req.url
