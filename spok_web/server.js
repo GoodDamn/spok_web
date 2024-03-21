@@ -57,7 +57,7 @@ router.set("/returnPayment", (res, url) => {
     res.end(htmlReturnPayment);
 });
 
-router.set("/res/meditate.png", (res, _) => {
+router.set("/img/meditate.png", (res, _) => {
     res.write(meditatePng);
     res.end();
 })
