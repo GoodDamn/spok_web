@@ -1,4 +1,5 @@
 let https = require('https');
+let http = require('http');
 let fs = require('fs');
 let config = require('./apis/config');
 
@@ -87,13 +88,20 @@ router.set("/favicon.ico", (res, _) => {
     res.end(favicon);
 });
 
-https.createServer(ssl,function (req, res) {
+http.createServer(function (req, res) {
+    handle("http:",req, res);
+}).listen(8080);
 
+https.createServer(ssl, function (req, res) {
+    handle("https:",req,res);
+}).listen(4443);
+
+function handle(protocol,req, res) {
     let url = new URL(
-        "http://"+req.rawHeaders[1] + req.url
+        "http://" + req.rawHeaders[1] + req.url
     );
 
-    console.log(url.host, url.pathname);
+    console.log(protocol, url.host, url.pathname);
 
     let node = router.get(
         url.pathname
@@ -105,8 +113,7 @@ https.createServer(ssl,function (req, res) {
     }
 
     node(res, url);
-    
-}).listen(8080);
+}
 
 function resText(res, text) {
     res.writeHead(
