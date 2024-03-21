@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+body {
+    background-color: #08193A;
+    visibility: hidden;
+}
+
+#mainDiv {
+    justify-content: center;
+    display: flex;
+}
+
+#mainDivTitle {
+    position: absolute;
+    color: #ffffff;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 5vh;
+    margin-top: 10vh;
+}
+
+#mainDivImage {
+    position: absolute;
+    width: 40vh;
+    height: 33vh;
+    margin-top: 29vh;
+}
+
+#mainDivBtnGet {
+    position: absolute;
+    color: #ffffff;
+    cursor: pointer;
+    background-color: #4F66E8;
+    padding: 4vh;
+    border-radius: 3vh;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 3vh;
+    text-decoration: none;
+    margin-top: 72vh;
+    transition: all 200ms ease-in-out;
+}
+
+#mainDivBtnGet:hover {
+    transform: scale(1.1);
+}

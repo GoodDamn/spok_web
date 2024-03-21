@@ -2,7 +2,6 @@ let http = require('http');
 let fs = require('fs');
 let config = require('./apis/config');
 
-
 let tls;
 try {
     tls = require('node:tls');
@@ -10,16 +9,24 @@ try {
     console.error('TLS not supported');
 }
 
+let cssPay = fs.readFileSync(
+    "./res/css/pay.css"
+);
+
+let jsPay = fs.readFileSync(
+    "./res/js/pay.js"
+);
+
 let htmlPay = fs.readFileSync(
-    "./res/pay.html"
+    "./res/html/pay.html"
 );
 
 let htmlReturnPayment = fs.readFileSync(
-    "./res/returnPayment.html"
+    "./res/html/returnPayment.html"
 );
 
 let meditatePng = fs.readFileSync(
-    "./res/meditate.png"
+    "./res/img/meditate.png"
 );
 
 console.log("created");
@@ -58,7 +65,15 @@ router.set("/returnPayment", (res, url) => {
     res.end(htmlReturnPayment);
 });
 
-router.set("/meditate.png", (res, _) => {
+router.set("/css/pay.css", (res, url) => {
+    res.end(cssPay);
+});
+
+router.set("/js/pay.js", (res, url) => {
+    res.end(jsPay);
+});
+
+router.set("/res/meditate.png", (res, _) => {
     res.write(meditatePng);
     res.end();
 })
