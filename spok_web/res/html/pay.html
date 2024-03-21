@@ -1,8 +1,57 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="../css/pay.css" rel="stylesheet"
-              type="text/css"/>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+            body {
+                background-color: #08193A;
+                visibility: hidden;
+            }
+
+            #mainDiv {
+                justify-content: center;
+                display: flex;
+            }
+
+            #mainDivTitle {
+                position: absolute;
+                color: #ffffff;
+                text-align: center;
+                font-family: "Open Sans", sans-serif;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 5vh;
+                margin-top: 10vh;
+            }
+
+            #mainDivImage {
+                position: absolute;
+                width: 40vh;
+                height: 33vh;
+                margin-top: 29vh;
+            }
+
+            #mainDivBtnGet {
+                position: absolute;
+                color: #ffffff;
+                cursor: pointer;
+                background-color: #4F66E8;
+                padding: 4vh;
+                border-radius: 3vh;
+                font-family: "Open Sans", sans-serif;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 3vh;
+                text-decoration: none;
+                margin-top: 72vh;
+                transition: all 200ms ease-in-out;
+            }
+
+            #mainDivBtnGet:hover {
+                transform: scale(1.1);
+            }
+        </style>
     </head>
     <body>
     
@@ -23,7 +72,68 @@
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
     
-        <script type="module" src="../js/pay.js"></script>
-    
+        <script type="module">
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            function onSign(
+                auth,
+                provider
+            ) {
+                auth.signInWithRedirect(
+                    provider
+                );
+            }
+
+            function onAuthStateChanged(
+                user
+            ) {
+                if (user == null) {
+                    document
+                        .body
+                        .style
+                        .visibility = 'visible';
+                    return;
+                }
+
+                window
+                    .location
+                    .href = "createOrder?id=" + user.uid;
+            }
+
+            window.onload = function () {
+
+                const firebaseConfig = {
+                    apiKey: "AIzaSyB2sJKaPgcsZObdtKPQ-ZI5oSmXapz7OIQ",
+                    authDomain: "spok-relax-app.firebaseapp.com",
+                }
+
+                const app = firebase.initializeApp(
+                    firebaseConfig
+                );
+
+                const auth = app.auth();
+
+                auth.onAuthStateChanged(
+                    onAuthStateChanged
+                );
+
+                let provider = new firebase.auth.OAuthProvider(
+                    'apple.com'
+                );
+
+                provider.addScope('email');
+                provider.addScope('name');
+
+                provider.setCustomParameters({
+                    locale: 'ru'
+                });
+
+                document.getElementById('mainDivBtnGet')
+                    .addEventListener('click', () => {
+                        onSign(auth, provider);
+                    });
+
+            }
+        </script>
     </body>
 </html>

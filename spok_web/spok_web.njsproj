@@ -28,14 +28,11 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="res\css\pay.css">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="res\favicon.ico" />
+    <Content Include="res\html\returnPayment.html" />
     <Content Include="res\js\pay.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="res\favicon.ico" />
-    <Content Include="res\html\returnPayment.html" />
     <Content Include="server.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />

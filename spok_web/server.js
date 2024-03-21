@@ -9,14 +9,6 @@ try {
     console.error('TLS not supported');
 }
 
-let cssPay = fs.readFileSync(
-    "./res/css/pay.css"
-);
-
-let jsPay = fs.readFileSync(
-    "./res/js/pay.js"
-);
-
 let htmlPay = fs.readFileSync(
     "./res/html/pay.html"
 );
@@ -63,14 +55,6 @@ router.set("/createOrder", (res, url) => {
 
 router.set("/returnPayment", (res, url) => {
     res.end(htmlReturnPayment);
-});
-
-router.set("/css/pay.css", (res, url) => {
-    res.end(cssPay);
-});
-
-router.set("/js/pay.js", (res, url) => {
-    res.end(jsPay);
 });
 
 router.set("/res/meditate.png", (res, _) => {
