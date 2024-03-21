@@ -82,11 +82,9 @@
             auth,
             provider
         ) {
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                }).catch((error) => {
-                    alert("Что-то пошло не так: " + error.code + " " + error.message);
-                });
+            auth.signInWithRedirect(
+                provider
+            );
         }
 
         function onAuthStateChanged(
