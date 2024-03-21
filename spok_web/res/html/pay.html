@@ -5,6 +5,10 @@
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
+            * {
+                transition: all 200ms ease-in-out;
+            }
+
             body {
                 background-color: #08193A;
                 visibility: hidden;
@@ -22,8 +26,8 @@
                 font-family: "Open Sans", sans-serif;
                 font-style: normal;
                 font-weight: 700;
-                font-size: 5vh;
-                margin-top: 10vh;
+                font-size: 4.5vh;
+                margin-top: 6vh;
             }
 
             #mainDivImage {
@@ -46,25 +50,34 @@
                 font-size: 3vh;
                 text-decoration: none;
                 margin-top: 72vh;
-                transition: all 200ms ease-in-out;
             }
 
             #mainDivBtnGet:hover {
                 transform: scale(1.1);
             }
 
-            #mainDivPolicy {
+            p {
                 color: #ffffff;
                 font-family: "Open Sans", sans-serif;
                 font-style: normal;
-                font-weight: 500;
+                font-weight: 700;
+                font-size: 2vh;
+                text-align: center;
+            }
+
+            #mainDivBottom {
+                position: absolute;
+                margin-top: 90vh;
             }
 
             #mainDivTerms {
-                color: #ffffff;
-                font-family: "Open Sans", sans-serif;
-                font-style: normal;
-                font-weight: 500;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+            #mainDivPolicy {
+                cursor: pointer;
+                text-decoration: underline;
             }
 
         </style>
@@ -72,25 +85,26 @@
     <body>
     
         <div id="mainDiv">
-    
+
             <h1 id="mainDivTitle">
-                Подписка SPOK на 1 месяц <br>
+                Подписка SPOK<br>1 месяц<br>
                 169 RUB
             </h1>
-    
+
             <img id="mainDivImage" src="../img/meditate.png" />
-    
+
             <a id="mainDivBtnGet">
                 Получить полный доступ
             </a>
 
-            <a id="mainDivTerms" href="/terms">
-                Условия пользования
-            </a>
-
-            <a id="mainDivPolicy" href="/policy">
-                Политика конфиденциальности
-            </a>
+            <p id="mainDivBottom">
+                <span id="mainDivTerms"
+                      onclick="window.location.href = 'terms';">Условия пользования</span>
+                &amp;
+                <br>
+                <span id="mainDivPolicy"
+                      onclick="window.location.href = 'policy';">Политика конфиденциальности</span>
+            </p>
         </div>
     
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
