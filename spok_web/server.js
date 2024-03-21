@@ -13,6 +13,14 @@ let htmlPay = fs.readFileSync(
     "./res/html/pay.html"
 );
 
+let htmlTerms = fs.readFileSync(
+    "./res/html/terms.html"
+);
+
+let htmlPolicy = fs.readFileSync(
+    "./res/html/policy.html"
+);
+
 let htmlReturnPayment = fs.readFileSync(
     "./res/html/returnPayment.html"
 );
@@ -55,6 +63,14 @@ router.set("/createOrder", (res, url) => {
         });
         res.end();
     });
+});
+
+router.set("/policy", (res, _) => {
+    res.end(htmlPolicy);
+});
+
+router.set("/terms", (res, _) => {
+    res.end(htmlTerms);
 });
 
 router.set("/returnPayment", (res, url) => {
