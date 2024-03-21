@@ -21,6 +21,10 @@ let meditatePng = fs.readFileSync(
     "./res/img/meditate.png"
 );
 
+let favicon = fs.readFileSync(
+    "./res/favicon.ico"
+);
+
 console.log("created");
 
 let router = new Map();
@@ -58,9 +62,12 @@ router.set("/returnPayment", (res, url) => {
 });
 
 router.set("/img/meditate.png", (res, _) => {
-    res.write(meditatePng);
-    res.end();
+    res.end(meditatePng);
 })
+
+router.set("/favicon.ico", (res, _) => {
+    res.end(favicon);
+});
 
 http.createServer(function (req, res) {
 
