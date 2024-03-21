@@ -34,6 +34,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="res\html\returnPayment.html" />
+    <Content Include="res\img\meditate.png" />
     <Content Include="res\js\pay.js">
       <SubType>Code</SubType>
     </Content>
@@ -45,6 +46,7 @@
     <Folder Include="res\" />
     <Folder Include="res\html\" />
     <Folder Include="res\css\" />
+    <Folder Include="res\img\" />
     <Folder Include="res\js\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

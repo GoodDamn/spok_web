@@ -12,6 +12,7 @@
             body {
                 background-color: #08193A;
                 visibility: hidden;
+                opacity: 0.0;
             }
 
             #mainDiv {
@@ -130,6 +131,17 @@
                         .body
                         .style
                         .visibility = 'visible';
+
+                    for (var opacity = 0; opacity < 1.1; opacity += 0.01) {
+                        console.log(opacity);
+                        setTimeout(() => {
+                            document
+                                .body
+                                .style
+                                .opacity = opacity;
+                        }, 100);
+                    }
+
                     return;
                 }
 
