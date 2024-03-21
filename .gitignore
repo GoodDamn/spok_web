@@ -1,2 +1,6 @@
 spok_web/apis
 node_modules
+bin
+obj
+Properties
+*.njsproj

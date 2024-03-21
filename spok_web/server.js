@@ -1,13 +1,6 @@
-let http = require('http');
+let https = require('https');
 let fs = require('fs');
 let config = require('./apis/config');
-
-let tls;
-try {
-    tls = require('node:tls');
-} catch (err) {
-    console.error('TLS not supported');
-}
 
 let htmlPay = fs.readFileSync(
     "./res/html/pay.html"
@@ -37,10 +30,6 @@ console.log("created");
 
 let router = new Map();
 
-router.set("/pay", (res, url) => {
-    resHtml(res, htmlPay);
-})
-
 router.set("/createOrder", (res, url) => {
     let params = url.searchParams;
     let userId = params.get('id');
@@ -65,16 +54,20 @@ router.set("/createOrder", (res, url) => {
     });
 });
 
+router.set("/pay", (res, url) => {
+    resHtml(res, htmlPay);
+})
+
 router.set("/policy", (res, _) => {
-    res.end(htmlPolicy);
+    resHtml(res,htmlPolicy);
 });
 
 router.set("/terms", (res, _) => {
-    res.end(htmlTerms);
+    resHtml(res,htmlTerms);
 });
 
 router.set("/returnPayment", (res, url) => {
-    res.end(htmlReturnPayment);
+    resHtml(res,htmlReturnPayment);
 });
 
 router.set("/img/meditate.png", (res, _) => {
@@ -111,19 +104,13 @@ function resText(res, text) {
         200,
         { 'Content-Type': 'text/plain' }
     );
-
-    res.write(text);
-
-    res.end();
+    res.end(text);
 }
 
 function resHtml(res, html) {
     res.writeHead(
         200,
-        { 'Content-Type': 'text/html' }
+        { 'Content-Type': 'text/html; charset=UTF-8;' }
     );
-
-    res.write(html);
-
-    res.end();
+    res.end(html);
 }
