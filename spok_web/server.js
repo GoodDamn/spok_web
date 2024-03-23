@@ -85,7 +85,7 @@ function loadResources(
     fs.readdirSync(path)
         .forEach((sub) => {
             console.log(path, sub);
-            let ind = sub.indexOf(".");
+            let ind = sub.lastIndexOf(".");
             if (ind == -1) {
                 loadResources(
                     resourceMap,
