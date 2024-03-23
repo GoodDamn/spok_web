@@ -16,11 +16,6 @@
                 background-color: #08193A;
             }
 
-            #mainDiv {
-                justify-content: center;
-                display: flex;
-            }
-
             #mainDivBack {
                 justify-content: center;
                 display: flex;
@@ -78,6 +73,7 @@
                 position: absolute;
                 margin-top: 40vh;
                 font-size: 5vh;
+                margin-left: 20vw;
             }
 
             #mainDivBottom {
@@ -145,31 +141,27 @@
 
             var titleCheck;
 
-            function iOS() {
-                return [
-                    'iPad Simulator',
-                    'iPhone Simulator',
-                    'iPod Simulator',
-                    'iPad',
-                    'iPhone',
-                    'iPod'
-                ].includes(navigator.platform)
-                    || (navigator.userAgent.includes("Mac")
-                        && "ontouchend" in document)
+            
+            function nonSafariShit() {
+                let u = navigator
+                    .userAgent;
+                console.log("AGENT SHIT:", u);
+                return u.indexOf("Windows") > -1
+                    || u.indexOf("Linux") > -1;
             }
 
             function onSign(
                 auth,
                 provider
             ) {
-                if (iOS()) {
-                    auth.signInWithPopup(
+                if (nonSafariShit()) {
+                    auth.signInWithRedirect(
                         provider
                     );
                     return;
                 }
 
-                auth.signInWithRedirect(
+                auth.signInWithPopup(
                     provider
                 );
             }

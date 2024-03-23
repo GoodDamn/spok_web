@@ -16,10 +16,10 @@ try {
     tls = require('node:tls');
     secondSSL = tls.createSecureContext({
         key: fs.readFileSync(
-            "./web/key"
+            "./www_ssl/key"
         ),
         cert: fs.readFileSync(
-            "./ssl/cert"
+            "./www_ssl/cert"
         )
     });
 } catch {
