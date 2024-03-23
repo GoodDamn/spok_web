@@ -2,12 +2,13 @@ let https = require('https');
 let http = require('http');
 let fs = require('fs');
 let config = require('./apis/config');
+const { url } = require('inspector');
 
 let router = new Map();
 let resourceMap = new Map();
 let date = new Date();
 
-loadResources(resourceMap, "./res");
+loadResources(resourceMap, "");
 
 let ssl = {
     key: fs.readFileSync(
@@ -42,6 +43,14 @@ router.set("/createOrder", (res, url) => {
     });
 });
 
+router.set("/pay", (res, url) => {
+    router.get("/pay.html")(res, url);
+});
+
+router.set("/paymentInfo", (res, url) => {
+    router.get("/paymentInfo.html")(res, url);
+});
+
 http.createServer(function (req, res) {
     res.writeHead(301, {
         'Location': 'https://' + req.rawHeaders[1] + req.url
@@ -67,11 +76,7 @@ https.createServer(ssl, function (req, res) {
     );
 
     if (node == undefined) {
-        res.writeHead(200, {
-            'Content-Type': 'text/html; charset=utf-8'
-        });
-
-        res.end(resourceMap.get("./res/html/pay.html"));
+        router.get("/pay.html")(res, url);
         return;
     }
 
@@ -82,9 +87,8 @@ function loadResources(
     resourceMap,
     path
 ) {
-    fs.readdirSync(path)
+    fs.readdirSync("res"+path)
         .forEach((sub) => {
-            console.log(path, sub);
             let ind = sub.lastIndexOf(".");
             if (ind == -1) {
                 loadResources(
@@ -97,12 +101,13 @@ function loadResources(
             let fileName = `/${sub}`;
             let p = path + fileName;
             let file = fs.readFileSync(
-                p
+                "res"+p
             );
             resourceMap.set(p, file);
 
+            console.log(p);
 
-            router.set(fileName.substring(0, ind + 1), (res, url) => {
+            router.set(p, (res, url) => {
                 res.writeHead(200, {
                     'Content-Type': mimeType(sub)
                 });
