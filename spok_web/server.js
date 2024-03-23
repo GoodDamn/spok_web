@@ -19,6 +19,10 @@ let htmlReturnPayment = fs.readFileSync(
     "./res/html/returnPayment.html"
 );
 
+let htmlPaymentInfo = fs.readFileSync(
+    "./res/paymentInfo.html"
+);
+
 let meditatePng = fs.readFileSync(
     "./res/img/meditate.png"
 );
@@ -26,6 +30,10 @@ let meditatePng = fs.readFileSync(
 let favicon = fs.readFileSync(
     "./res/favicon.ico"
 );
+
+let resourceMap = new Map();
+
+console.log(fs.readdirSync("./res"));
 
 let ssl = {
     key: fs.readFileSync(
