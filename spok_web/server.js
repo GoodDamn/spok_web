@@ -43,6 +43,14 @@ router.set("/createOrder", (res, url) => {
     });
 });
 
+router.set("/policy", (res, url) => {
+    router.get("/policy.html")(res, url);
+});
+
+router.set("/terms", (res, url) => {
+    router.get("/terms.html")(res, url);
+});
+
 router.set("/pay", (res, url) => {
     router.get("/pay.html")(res, url);
 });
