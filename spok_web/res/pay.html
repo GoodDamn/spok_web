@@ -124,10 +124,31 @@
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
 
         <script type="module">
+
+            function iOS() {
+                return [
+                    'iPad Simulator',
+                    'iPhone Simulator',
+                    'iPod Simulator',
+                    'iPad',
+                    'iPhone',
+                    'iPod'
+                ].includes(navigator.platform)
+                    || (navigator.userAgent.includes("Mac")
+                        && "ontouchend" in document)
+            }
+
             function onSign(
                 auth,
                 provider
             ) {
+                if (iOS()) {
+                    auth.signInWithPopup(
+                        provider
+                    );
+                    return;
+                }
+
                 auth.signInWithRedirect(
                     provider
                 );

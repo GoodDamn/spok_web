@@ -11,7 +11,7 @@ let date = new Date();
 loadResources(resourceMap, "");
 
 let tls;
-const secondSSL;
+var secondSSL;
 try {
     tls = require('node:tls');
     secondSSL = tls.createSecureContext({
@@ -33,14 +33,14 @@ let ssl = {
     ),
     cert: fs.readFileSync(
         "./ssl/cert"
-    ),
+    )/*,
     SNICallback: function (domain, cb) {
         if (domain === 'domain') {
             cb(null, secondSSL);
         } else {
             cb();
         }
-    }
+    }*/
 };
 
 router.set("/createOrder", (res, url) => {
