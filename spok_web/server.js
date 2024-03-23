@@ -10,13 +10,37 @@ let date = new Date();
 
 loadResources(resourceMap, "");
 
+let tls;
+const secondSSL;
+try {
+    tls = require('node:tls');
+    secondSSL = tls.createSecureContext({
+        key: fs.readFileSync(
+            "./web/key"
+        ),
+        cert: fs.readFileSync(
+            "./ssl/cert"
+        )
+    });
+} catch {
+    console.log("TLS not supported");
+}
+
+
 let ssl = {
     key: fs.readFileSync(
         "./ssl/key"
     ),
     cert: fs.readFileSync(
         "./ssl/cert"
-    )
+    ),
+    SNICallback: function (domain, cb) {
+        if (domain === 'domain') {
+            cb(null, secondSSL);
+        } else {
+            cb();
+        }
+    }
 };
 
 router.set("/createOrder", (res, url) => {
