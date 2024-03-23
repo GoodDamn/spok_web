@@ -3,37 +3,11 @@ let http = require('http');
 let fs = require('fs');
 let config = require('./apis/config');
 
-let htmlPay = fs.readFileSync(
-    "./res/html/pay.html"
-);
-
-let htmlTerms = fs.readFileSync(
-    "./res/html/terms.html"
-);
-
-let htmlPolicy = fs.readFileSync(
-    "./res/html/policy.html"
-);
-
-let htmlReturnPayment = fs.readFileSync(
-    "./res/html/returnPayment.html"
-);
-
-let htmlPaymentInfo = fs.readFileSync(
-    "./res/paymentInfo.html"
-);
-
-let meditatePng = fs.readFileSync(
-    "./res/img/meditate.png"
-);
-
-let favicon = fs.readFileSync(
-    "./res/favicon.ico"
-);
-
+let router = new Map();
 let resourceMap = new Map();
+loadResources(resourceMap, "./res");
 
-console.log(fs.readdirSync("./res"));
+console.log("Resources", resourceMap);
 
 let ssl = {
     key: fs.readFileSync(
@@ -43,10 +17,6 @@ let ssl = {
         "./ssl/cert"
     )
 };
-
-console.log("created");
-
-let router = new Map();
 
 router.set("/createOrder", (res, url) => {
     let params = url.searchParams;
@@ -72,47 +42,19 @@ router.set("/createOrder", (res, url) => {
     });
 });
 
-router.set("/pay", (res, url) => {
-    resHtml(res, htmlPay);
-})
-
-router.set("/policy", (res, _) => {
-    resHtml(res,htmlPolicy);
-});
-
-router.set("/terms", (res, _) => {
-    resHtml(res,htmlTerms);
-});
-
-router.set("/returnPayment", (res, url) => {
-    resHtml(res,htmlReturnPayment);
-});
-
-router.set("/img/meditate.png", (res, _) => {
-    res.end(meditatePng);
-})
-
-router.set("/favicon.ico", (res, _) => {
-    res.end(favicon);
-});
-
 http.createServer(function (req, res) {
-    handle("http:", req, res);
-}).listen(8080);
-
-https.createServer(ssl, function (req, res) {
     res.writeHead(301, {
         'Location': 'https://' + req.rawHeaders[1] + req.url
     });
     res.end();
-}).listen(4443);
+}).listen(8080);
 
-function handle(protocol,req, res) {
+https.createServer(ssl, function (req, res) {
     let url = new URL(
         "http://" + req.rawHeaders[1] + req.url
     );
 
-    console.log(protocol, url.host, url.pathname, req.method);
+    console.log("http", url.host, url.pathname, req.method);
 
     let node = router.get(
         url.pathname
@@ -124,6 +66,35 @@ function handle(protocol,req, res) {
     }
 
     node(res, url);
+}).listen(4443);
+
+function loadResources(
+    resourceMap,
+    path
+) {
+    fs.readdirSync(path)
+        .forEach((sub) => {
+            console.log(path, sub);
+            let ind = sub.indexOf(".");
+            if (ind == -1) {
+                loadResources(
+                    resourceMap,
+                    path + `/${sub}`
+                );
+                return;
+            }
+
+            let fileName = `/${sub}`;
+            let p = path + fileName;
+            let file = fs.readFileSync(
+                p
+            );
+            resourceMap.set(p, file);
+            router.set(fileName.substring(0,ind+1), (res, url) => {
+                res.end(resourceMap.get(p));
+            });
+            
+        });
 }
 
 function resText(res, text) {
