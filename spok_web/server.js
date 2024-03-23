@@ -90,11 +90,25 @@ function loadResources(
                 p
             );
             resourceMap.set(p, file);
-            router.set(fileName.substring(0,ind+1), (res, url) => {
+
+
+            router.set(fileName.substring(0, ind + 1), (res, url) => {
+                res.writeHead(200, {
+                    'Content-Type': mimeType(sub)
+                });
                 res.end(resourceMap.get(p));
             });
             
         });
+}
+
+function mimeType(fileName) {
+
+    if (fileName.includes("html")) {
+        return 'text/html';
+    }
+
+    return '';
 }
 
 function resText(res, text) {
@@ -103,12 +117,4 @@ function resText(res, text) {
         { 'Content-Type': 'text/plain' }
     );
     res.end(text);
-}
-
-function resHtml(res, html) {
-    res.writeHead(
-        200,
-        { 'Content-Type': 'text/html; charset=utf-8;' }
-    );
-    res.end(html);
 }
