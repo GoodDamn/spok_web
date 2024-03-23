@@ -5,9 +5,9 @@ let config = require('./apis/config');
 
 let router = new Map();
 let resourceMap = new Map();
-loadResources(resourceMap, "./res");
+let date = new Date();
 
-console.log("Resources", resourceMap);
+loadResources(resourceMap, "./res");
 
 let ssl = {
     key: fs.readFileSync(
@@ -53,8 +53,14 @@ https.createServer(ssl, function (req, res) {
     let url = new URL(
         "http://" + req.rawHeaders[1] + req.url
     );
-
-    console.log("http", url.host, url.pathname, req.method);
+    date.setTime(Date.now());
+    console.log("\n\nhttps", req.method, url.host, url.pathname);
+    console.log("IP:", req.socket.remoteAddress);
+    console.log(
+        "DATE REQ:",
+        date.toLocaleDateString(),
+        date.toLocaleTimeString()
+    );
 
     let node = router.get(
         url.pathname
