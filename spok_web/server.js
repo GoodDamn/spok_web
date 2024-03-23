@@ -61,7 +61,11 @@ https.createServer(ssl, function (req, res) {
     );
 
     if (node == undefined) {
-        resText(res, "Hello");
+        res.writeHead(200, {
+            'Content-Type': 'text/html; charset=utf-8'
+        });
+
+        res.end(resourceMap.get("./res/html/pay.html"));
         return;
     }
 
@@ -109,12 +113,4 @@ function mimeType(fileName) {
     }
 
     return '';
-}
-
-function resText(res, text) {
-    res.writeHead(
-        200,
-        { 'Content-Type': 'text/plain' }
-    );
-    res.end(text);
 }
