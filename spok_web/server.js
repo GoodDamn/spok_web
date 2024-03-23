@@ -89,11 +89,14 @@ router.set("/favicon.ico", (res, _) => {
 });
 
 http.createServer(function (req, res) {
-    handle("http:",req, res);
+    handle("http:", req, res);
 }).listen(8080);
 
 https.createServer(ssl, function (req, res) {
-    handle("https:",req,res);
+    res.writeHead(301, {
+        'Location': 'https://' + req.rawHeaders[1] + req.url
+    });
+    res.end();
 }).listen(4443);
 
 function handle(protocol,req, res) {
@@ -101,7 +104,7 @@ function handle(protocol,req, res) {
         "http://" + req.rawHeaders[1] + req.url
     );
 
-    console.log(protocol, url.host, url.pathname);
+    console.log(protocol, url.host, url.pathname, req.method);
 
     let node = router.get(
         url.pathname
