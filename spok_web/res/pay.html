@@ -14,13 +14,18 @@
 
             body {
                 background-color: #08193A;
-                visibility: hidden;
-                opacity: 0.0;
             }
 
             #mainDiv {
                 justify-content: center;
                 display: flex;
+            }
+
+            #mainDivBack {
+                justify-content: center;
+                display: flex;
+                visibility: hidden;
+                opacity: 0.0;
             }
 
             #mainDivTitle {
@@ -69,6 +74,12 @@
                 text-align: center;
             }
 
+            #mainDivCheckTitle {
+                position: absolute;
+                margin-top: 40vh;
+                font-size: 5vh;
+            }
+
             #mainDivBottom {
                 position: absolute;
                 margin-top: 87vh;
@@ -95,35 +106,44 @@
     
         <div id="mainDiv">
 
-            <h1 id="mainDivTitle">
-                Подписка SPOK<br>1 месяц<br>
-                169 RUB
-            </h1>
+            <div id="mainDivBack">
+                <h1 id="mainDivTitle">
+                    Подписка SPOK<br>1 месяц<br>
+                    169 RUB
+                </h1>
 
-            <img id="mainDivImage" src="img/meditate.png" />
+                <img id="mainDivImage" src="img/meditate.png" />
 
-            <a id="mainDivBtnGet">
-                Получить полный доступ
-            </a>
+                <a id="mainDivBtnGet">
+                    Получить полный доступ
+                </a>
 
-            <p id="mainDivBottom">
-                <span id="mainDivTerms"
-                      onclick="window.location.href = 'terms';">Условия пользования</span>
-                &amp;
-                <br>
-                <span id="mainDivPolicy"
-                      onclick="window.location.href = 'policy';">Политика конфиденциальности</span>
-				&amp;
-				<br>
-				<span id="mainDivPaymentInfo"
-					  onclick="window.location.href='paymentInfo';">Техническая поддержка</span>
+                <p id="mainDivBottom">
+                    <span id="mainDivTerms"
+                          onclick="window.location.href = 'terms';">Условия пользования</span>
+                    &amp;
+                    <br>
+                    <span id="mainDivPolicy"
+                          onclick="window.location.href = 'policy';">Политика конфиденциальности</span>
+                    &amp;
+                    <br>
+                    <span id="mainDivPaymentInfo"
+                          onclick="window.location.href='paymentInfo';">Техническая поддержка</span>
+                </p>
+            </div>
+
+            <p id="mainDivCheckTitle">
+                Проверка...
             </p>
+
         </div>
-    
+
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
 
         <script type="module">
+
+            var titleCheck;
 
             function iOS() {
                 return [
@@ -157,16 +177,24 @@
             function onAuthStateChanged(
                 user
             ) {
+
                 if (user == null) {
-                    document
-                        .body
+
+                    let mainDivBack = document
+                        .getElementById("mainDivBack");
+
+                    mainDivBack
                         .style
                         .visibility = 'visible';
+                        
+                    document
+                        .getElementById("mainDivCheckTitle")
+                        .style
+                        .visibility = 'hidden';
 
                     for (var opacity = 0; opacity < 1.1; opacity += 0.01) {
                         setTimeout(() => {
-                            document
-                                .body
+                            mainDivBack
                                 .style
                                 .opacity = opacity;
                         }, 100);
