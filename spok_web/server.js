@@ -2,11 +2,18 @@ let https = require('https');
 let http = require('http');
 let fs = require('fs');
 let config = require('./apis/config');
-const { url } = require('inspector');
+
+class URL {
+    constructor(path, params) {
+        this.path = path;
+        this.params = params;
+    }
+};
 
 let router = new Map();
 let resourceMap = new Map();
 let date = new Date();
+var url = new URL("", "");
 
 loadResources(resourceMap, "");
 
@@ -44,10 +51,31 @@ let ssl = {
 };
 
 router.set("/createOrder", (res, url) => {
-    let params = url.searchParams;
-    let userId = params.get('id');
-    
-    if (userId == undefined || userId.length < 15) {
+
+    let params = url.params;
+
+    let indexId = params.lastIndexOf(
+        "id"
+    );
+
+    var indexAmp = params.indexOf(
+        "&"
+    )
+
+    if (indexId == -1) {
+        res.end();
+        return;
+    }
+
+    if (indexAmp == -1) {
+        indexAmp = params.length
+    }
+
+    let userId = params.substring(
+        indexId + 3, indexAmp
+    )
+
+    if (userId.length < 15) {
         res.end();
         return;
     }
@@ -95,12 +123,34 @@ http.createServer(function (req, res) {
 }).listen(8080);
 
 https.createServer(ssl, function (req, res) {
-    let url = new URL(
-        "http://" + req.rawHeaders[1] + req.url
-    );
+
+    let index = req.url
+        .lastIndexOf("?");
+
+    if (index != -1) {
+        url.path = req.url.substring(
+            0, index
+        );
+        url.params = req.url.substring(
+            index + 1, req.url.length
+        );
+    }
+
     date.setTime(Date.now());
-    console.log("\n\nhttps", req.method, url.host, url.pathname);
-    console.log("IP:", req.socket.remoteAddress);
+    console.log(
+        "\n\nhttps",
+        req.method,
+        req.rawHeaders[1],
+        url.path,
+        url.params
+    );
+
+    console.log(
+        "IP:",
+        req.socket
+            .remoteAddress
+    );
+
     console.log(
         "DATE REQ:",
         date.toLocaleDateString(),
@@ -108,7 +158,7 @@ https.createServer(ssl, function (req, res) {
     );
 
     let node = router.get(
-        url.pathname
+        url.path
     );
 
     if (node == undefined) {
@@ -143,7 +193,7 @@ function loadResources(
 
             console.log(p);
 
-            router.set(p, (res, url) => {
+            router.set(p, (res, _) => {
                 res.writeHead(200, {
                     'Content-Type': mimeType(sub)
                 });
