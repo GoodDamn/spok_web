@@ -6,6 +6,7 @@ let config = require('./apis/config');
 class URL {
     path;
     params;
+    host;
 };
 
 let router = new Map();
@@ -123,6 +124,8 @@ https.createServer(ssl, function (req, res) {
     let index = req.url
         .lastIndexOf("?");
 
+    url.host = req.rawHeaders[1];
+
     if (index != -1) {
         url.path = req.url.substring(
             0, index
@@ -141,7 +144,7 @@ https.createServer(ssl, function (req, res) {
     console.log(
         "\n\nhttps",
         req.method,
-        req.rawHeaders[1],
+        url.host,
         url.path,
         url.params
     );
