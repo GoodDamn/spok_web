@@ -4,16 +4,14 @@ let fs = require('fs');
 let config = require('./apis/config');
 
 class URL {
-    constructor(path, params) {
-        this.path = path;
-        this.params = params;
-    }
+    path;
+    params;
 };
 
 let router = new Map();
 let resourceMap = new Map();
 let date = new Date();
-var url = new URL("", "");
+var url = new URL();
 
 loadResources(resourceMap, "");
 
@@ -81,17 +79,15 @@ router.set("/createOrder", (res, url) => {
     }
 
     config.createPayment(url.host, (orderId, confirm_url) => {
-
         config.setUserData(
             userId,{
                 "pteid": orderId
-            }
-        );
-
-        res.writeHead(302, {
-            'Location': confirm_url
-        });
-        res.end();
+            },() => {
+                res.writeHead(302, {
+                    'Location': confirm_url
+                });
+                res.end();
+            });
     });
 });
 
@@ -131,11 +127,16 @@ https.createServer(ssl, function (req, res) {
         url.path = req.url.substring(
             0, index
         );
+
         url.params = req.url.substring(
-            index + 1, req.url.length
+            index + 1
         );
+    } else {
+        url.path = req.url;
+        url.params = "";
     }
 
+    
     date.setTime(Date.now());
     console.log(
         "\n\nhttps",
@@ -162,7 +163,7 @@ https.createServer(ssl, function (req, res) {
     );
 
     if (node == undefined) {
-        router.get("/pay.html")(res, url);
+        router.get("/pay.html")(res, url.path);
         return;
     }
 
