@@ -164,9 +164,28 @@
                     return;
                 }
 
+                let divBack = document
+                    .getElementById("mainDivBack");
+
+                let titleCheck = document
+                    .getElementById("mainDivCheckTitle");
+
+                divBack.style
+                    .visibility = 'hidden';
+
+                titleCheck.style
+                    .visibility = 'visible';
+
                 auth.signInWithPopup(
                     provider
-                );
+                ).catch((error) => {
+                    alert(error);
+                    divBack.style
+                        .visibility = 'visible';
+
+                    titleCheck.style
+                        .visibility = 'hidden';
+                });
             }
 
             function onAuthStateChanged(
