@@ -61,41 +61,70 @@ router.set("/createOrder", (res, url) => {
         return;
     }
 
-    config.createPayment(url.host, (orderId, confirm_url) => {
-        config.setUserData(
-            userId,{
-                "pteid": orderId
-            },() => {
-                res.writeHead(302, {
-                    'Location': confirm_url
-                });
-                res.end();
-            });
-    });
-});
-
-router.set("/checkPayment", (res, url) => {
-
-    let userId = getUserIdParams(
-        url
-    );
-
-    if (userId == null) {
-        res.end();
-        return;
-    }
-
     config.getUserPaymentId(
         userId, (payId) => {
-
+            console.log("CREATE_ORDER: USER_PAY_ID", payId);
             if (payId == null) {
                 res.end();
                 return;
             }
 
             config.checkPayment(
-                payId
-            );
+                payId, (payment) => {
+
+                    if (payment['paid']) {
+                        // Check sub validation for 31 days = 2678400 sec.
+
+                        let isoDate = payment['created_at'];
+
+                        let currentTime = Math.round(date.getTime() / 1000);
+                        let createdTime = Math.round(Date.parse(isoDate) / 1000);
+
+                        if (currentTime - createdTime < 2678400) {
+                            // with premium
+                            res.end();
+                            return;
+                        }
+
+                        // premium expired
+
+                        config.createPayment(url.host, (orderId, confirm_url) => {
+                            config.setUserData(
+                                userId, {
+                                "pteid": orderId
+                            }, () => {
+                                res.writeHead(302, {
+                                    'Location': confirm_url
+                                });
+                                res.end();
+                            });
+                        });
+
+                        return;
+                    }
+
+                    let status = payment['status'];
+
+                    if (status === 'pending' || status === 'waiting_for_capture') {
+                        res.writeHead(302, {
+                            'Location': payment['confirmation']['confirmation_url']
+                        });
+                        res.end();
+                        return;
+                    }
+
+                    config.createPayment(url.host, (orderId, confirm_url) => {
+                        config.setUserData(
+                            userId, {
+                            "pteid": orderId
+                        }, () => {
+                            res.writeHead(302, {
+                                'Location': confirm_url
+                            });
+                            res.end();
+                        });
+                    });
+                });
         }
     )
 });
