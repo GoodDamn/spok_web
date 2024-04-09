@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SPOK.СОН</title>
+
+        <meta charset="utf-8" />
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+            * {
+                transition: all 200ms ease-in-out;
+            }
+
+            body {
+                background-color: #08193A;
+                visibility: hidden;
+                opacity: 0.0;
+            }
+
+            #mainDiv {
+                justify-content: center;
+                display: flex;
+            }
+
+            #mainDivTitle {
+                position: absolute;
+                color: #ffffff;
+                text-align: center;
+                font-family: "Open Sans", sans-serif;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 4.5vh;
+                margin-top: 6vh;
+            }
+
+            #mainDivImage {
+                position: absolute;
+                width: 40vh;
+                height: 33vh;
+                margin-top: 29vh;
+            }
+
+            #mainDivBtnGet {
+                position: absolute;
+                color: #ffffff;
+                cursor: pointer;
+                background-color: #4F66E8;
+                padding: 3.2vh;
+                border-radius: 3vh;
+                font-family: "Open Sans", sans-serif;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 2.8vh;
+                text-decoration: none;
+                margin-top: 72vh;
+            }
+
+            #mainDivBtnGet:hover {
+                transform: scale(1.1);
+            }
+
+            p {
+                color: #ffffff;
+                font-family: "Open Sans", sans-serif;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 2vh;
+                text-align: center;
+            }
+
+            #mainDivBottom {
+                position: absolute;
+                margin-top: 90vh;
+            }
+
+            #mainDivTerms {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+            #mainDivPolicy {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+        </style>
+    </head>
+    <body>
+    
+        <div id="mainDiv">
+
+            <h1 id="mainDivTitle">
+                Подписка SPOK<br>1 месяц<br>
+                169 RUB
+            </h1>
+
+            <img id="mainDivImage" src="meditate" />
+
+            <a id="mainDivBtnGet">
+                Получить полный доступ
+            </a>
+
+            <p id="mainDivBottom">
+                <span id="mainDivTerms"
+                      onclick="window.location.href = 'terms';">Условия пользования</span>
+                &amp;
+                <br>
+                <span id="mainDivPolicy"
+                      onclick="window.location.href = 'policy';">Политика конфиденциальности</span>
+            </p>
+        </div>
+    
+        <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+
+        <script type="module">
+            function onSign(
+                auth,
+                provider
+            ) {
+                auth.signInWithRedirect(
+                    provider
+                );
+            }
+
+            function onAuthStateChanged(
+                user
+            ) {
+                if (user == null) {
+                    document
+                        .body
+                        .style
+                        .visibility = 'visible';
+
+                    for (var opacity = 0; opacity < 1.1; opacity += 0.01) {
+                        setTimeout(() => {
+                            document
+                                .body
+                                .style
+                                .opacity = opacity;
+                        }, 100);
+                    }
+
+                    return;
+                }
+
+                window
+                    .location
+                    .href = "createOrder?id=" + user.uid;
+            }
+
+            window.onload = function () {
+
+                const firebaseConfig = {
+                    apiKey: "AIzaSyB2sJKaPgcsZObdtKPQ-ZI5oSmXapz7OIQ",
+                    authDomain: "spok-relax-app.firebaseapp.com",
+                }
+
+                const app = firebase.initializeApp(
+                    firebaseConfig
+                );
+
+                const auth = app.auth();
+
+                auth.onAuthStateChanged(
+                    onAuthStateChanged
+                );
+
+                let provider = new firebase.auth.OAuthProvider(
+                    'apple.com'
+                );
+
+                provider.addScope('email');
+                provider.addScope('name');
+
+                provider.setCustomParameters({
+                    locale: 'ru'
+                });
+
+                document.getElementById('mainDivBtnGet')
+                    .addEventListener('click', () => {
+                        onSign(auth, provider);
+                    });
+
+            }
+        </script>
+    </body>
+</html>

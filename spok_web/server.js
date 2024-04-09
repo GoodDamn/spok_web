@@ -12,7 +12,6 @@ class URL {
 let router = new Map();
 let resourceMap = new Map();
 let date = new Date();
-var url = new URL();
 
 loadResources(resourceMap, "");
 
@@ -51,30 +50,13 @@ let ssl = {
 
 router.set("/createOrder", (res, url) => {
 
-    let params = url.params;
-
-    let indexId = params.lastIndexOf(
-        "id"
+    let userId = getUserIdParams(
+        url
     );
 
-    var indexAmp = params.indexOf(
-        "&"
-    )
+    console.log("CREATE_ORDER:", userId);
 
-    if (indexId == -1) {
-        res.end();
-        return;
-    }
-
-    if (indexAmp == -1) {
-        indexAmp = params.length
-    }
-
-    let userId = params.substring(
-        indexId + 3, indexAmp
-    )
-
-    if (userId.length < 15) {
+    if (userId == null) {
         res.end();
         return;
     }
@@ -90,6 +72,32 @@ router.set("/createOrder", (res, url) => {
                 res.end();
             });
     });
+});
+
+router.set("/checkPayment", (res, url) => {
+
+    let userId = getUserIdParams(
+        url
+    );
+
+    if (userId == null) {
+        res.end();
+        return;
+    }
+
+    config.getUserPaymentId(
+        userId, (payId) => {
+
+            if (payId == null) {
+                res.end();
+                return;
+            }
+
+            config.checkPayment(
+                payId
+            );
+        }
+    )
 });
 
 router.set("/returnPayment", (res, url) => {
@@ -123,6 +131,8 @@ https.createServer(ssl, function (req, res) {
 
     let index = req.url
         .lastIndexOf("?");
+
+    var url = new URL();
 
     url.host = req.rawHeaders[1];
 
@@ -205,6 +215,38 @@ function loadResources(
             });
             
         });
+}
+
+function getUserIdParams(
+    url
+) {
+    let params = url.params;
+
+    let indexId = params.lastIndexOf(
+        "id"
+    );
+
+    var indexAmp = params.indexOf(
+        "&"
+    )
+
+    if (indexId == -1) {
+        return null;
+    }
+
+    if (indexAmp == -1) {
+        indexAmp = params.length
+    }
+
+    let userId = params.substring(
+        indexId + 3, indexAmp
+    )
+
+    if (userId.length < 15) {
+        return null;
+    }
+
+    return userId;
 }
 
 function mimeType(fileName) {
