@@ -70,10 +70,8 @@
             }
 
             #mainDivCheckTitle {
-                position: absolute;
                 margin-top: 40vh;
                 font-size: 5vh;
-                margin-left: 20vw;
             }
 
             #mainDivInputEmail {
@@ -146,10 +144,11 @@
                 </p>
             </div>
 
-            <p id="mainDivCheckTitle">
-                Проверка...
-            </p>
-
+            <div id="mainDiv">
+                <p id="mainDivCheckTitle">
+                    Проверка...
+                </p>
+            </div>
         </div>
 
         <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
@@ -158,8 +157,7 @@
         <script type="module">
 
             var titleCheck;
-
-            
+                        
             function nonSafariShit() {
                 let u = navigator
                     .userAgent;
