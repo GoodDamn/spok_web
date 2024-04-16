@@ -1,137 +1,151 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>SPOK.СОН</title>
+<head>
+    <title>SPOK.СОН</title>
 
-        <meta charset="utf-8" />
+    <meta charset="utf-8" />
 
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-            * {
-                transition: all 200ms ease-in-out;
-            }
+        * {
+            transition: all 200ms ease-in-out;
+        }
 
-            body {
-                background-color: #08193A;
-            }
+        .center {
+            display: flex;
+            justify-content: center;
+        }
 
-            #mainDivBack {
-                justify-content: center;
-                display: flex;
-                visibility: hidden;
-                opacity: 0.0;
-            }
+        body {
+            background-color: #08193A;
+        }
 
-            #mainDivTitle {
-                position: absolute;
-                color: #ffffff;
-                text-align: center;
-                font-family: "Open Sans", sans-serif;
-                font-style: normal;
-                font-weight: 700;
-                font-size: 4.5vh;
-                margin-top: 6vh;
-            }
+        #mainDivBack {
+            visibility: hidden;
+            opacity: 0.0;
+        }
 
-            #mainDivImage {
-                position: absolute;
-                width: 40vh;
-                height: 33vh;
-                margin-top: 29vh;
-            }
+        #mainDivTitle {
+            color: #ffffff;
+            text-align: center;
+            font-family: "Open Sans", sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 4.5vh;
+        }
 
-            #mainDivBtnGet {
-                position: absolute;
-                color: #ffffff;
-                cursor: pointer;
-                background-color: #4F66E8;
-                padding: 3.2vh;
-                border-radius: 3vh;
-                font-family: "Open Sans", sans-serif;
-                font-style: normal;
-                font-weight: 700;
-                font-size: 2.8vh;
-                text-decoration: none;
-                margin-top: 72vh;
-            }
+        #mainDivImage {
+            width: 40vh;
+            height: 33vh;
+        }
 
-            #mainDivBtnGet:hover {
-                transform: scale(1.1);
-            }
+        #mainDivBtnGet {
+            color: #ffffff;
+            cursor: pointer;
+            background-color: #4F66E8;
+            padding: 3.2vh;
+            border-radius: 3vh;
+            font-family: "Open Sans", sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 2.8vh;
+            text-decoration: none;
+        }
 
-            p {
-                color: #ffffff;
-                font-family: "Open Sans", sans-serif;
-                font-style: normal;
-                font-weight: 700;
-                font-size: 2vh;
-                text-align: center;
-            }
+        #mainDivBtnGet:hover {
+            transform: scale(1.1);
+        }
 
-            #mainDivCheckTitle {
-                margin-top: 40vh;
-                font-size: 5vh;
-            }
+        p {
+            color: #ffffff;
+            font-family: "Open Sans", sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 2vh;
+            text-align: center;
+        }
 
-            #mainDivInputEmail {
-                position: absolute;
-                background-color: rgba(255,255,255,0.1);
-                color: #ffffff;
-                border-color: rgba(255,255,255,0);
-                border-radius: 0.8vh;
-                font-family: "Open Sans", sans-serif;
-                font-weight: 500;
-                font-size: 2.2vh;
-                padding: 1.3vh;
-                margin-top: 65vh;
-            }
+        #titleCheck {
+            position: absolute;
+            font-size: 5vh;
+        }
 
-            #mainDivBottom {
-                position: absolute;
-                margin-top: 87vh;
-            }
+        #mainDivInputEmail {
+            background-color: rgba(255,255,255,0.1);
+            color: #ffffff;
+            border-color: rgba(255,255,255,0);
+            border-radius: 0.8vh;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 500;
+            font-size: 2.2vh;
+            padding: 1.3vh;
+        }
 
-            #mainDivTerms {
-                cursor: pointer;
-                text-decoration: underline;
-            }
+        #mainDivTerms {
+            cursor: pointer;
+            text-decoration: underline;
+        }
 
-			#mainDivPaymentInfo {
-				cursor: pointer;
-                text-decoration: underline;
-			}
+        #mainDivPaymentInfo {
+            cursor: pointer;
+            text-decoration: underline;
+        }
 
-            #mainDivPolicy {
-                cursor: pointer;
-                text-decoration: underline;
-            }
+        #mainDivPolicy {
+            cursor: pointer;
+            text-decoration: underline;
+        }
 
-        </style>
-    </head>
-    <body>
-    
-        <div id="mainDiv">
+        input {
+            background-color: rgba(255,255,255,0.1);
+            color: #ffffff;
+            border-color: rgba(255,255,255,0);
+            border-radius: 0.8vh;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 500;
+            font-size: 2.2vh;
+            padding: 1.3vh;
+        }
 
+        #linearLayout {
+            display: inline-block;
+            vertical-align: central;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="center">
+        <div id="linearLayout">
             <div id="mainDivBack">
-                <h1 id="mainDivTitle">
-                    Подписка SPOK<br>1 месяц<br>
-                    169 RUB
-                </h1>
 
-                <img id="mainDivImage" src="img/meditate.png" />
+                <div class="center">
+                    <h1 id="mainDivTitle">
+                        Подписка SPOK<br>1 месяц<br>
+                        169 RUB
+                    </h1>
+                </div>
 
-                <input id="mainDivInputEmail" type="email"/>
+                <div class="center">
+                    <img id="mainDivImage" src="img/meditate.png" />
+                </div>
 
-                <a id="mainDivBtnGet">
-                    Получить полный доступ
-                </a>
+                <div class="center">
+                    <input id="mainDivInputEmail" type="email" />
+                </div>
 
-                <p id="mainDivBottom">
-					
-					<span id="mainDivPaymentInfo"
+                <div class="center">
+                    <a id="mainDivBtnGet">
+                        Получить полный доступ
+                    </a>
+                </div>
+
+                <p>
+
+                    <span id="mainDivPaymentInfo"
                           onclick="window.location.href='paymentInfo';">Техническая поддержка</span>
-					&amp;
+                    &amp;
                     <br>
                     <span id="mainDivTerms"
                           onclick="window.location.href = 'terms';">Условия пользования</span>
@@ -139,136 +153,160 @@
                     <br>
                     <span id="mainDivPolicy"
                           onclick="window.location.href = 'policy';">Политика конфиденциальности</span>
-                    
-                    
+
+
                 </p>
             </div>
 
-            <div id="mainDiv">
-                <p id="mainDivCheckTitle">
-                    Проверка...
-                </p>
-            </div>
+            <!--<div id="mainDiv">
+                <div style="display: inline-block; vertical-align: central; justify-content: center;">
+                    <div id="mainDiv">
+                        <h1 id="mainDivTitle">
+                            Необходимо указать почту для отправки чека, чтобы продолжить
+                        </h1>
+                    </div>
+
+                    <div id="mainDiv">
+                        <input type="email" />
+                    </div>
+
+                    <div id="mainDiv">
+                        <a id="mainDivBtnGet">
+                            Продолжить
+                        </a>
+                    </div>
+
+                </div>
+            </div>-->
+
         </div>
 
-        <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+    </div>
 
-        <script type="module">
+    <div class="center">
+        <p id="titleCheck">
+            Проверка...
+        </p>
+    </div>
 
-            var titleCheck;
-                        
-            function nonSafariShit() {
-                let u = navigator
-                    .userAgent;
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
 
-                return u.indexOf("Windows") > -1
-                    || u.indexOf("Linux") > -1;
+    <script type="module">
+
+        var titleCheck;
+
+        function nonSafariShit() {
+            let u = navigator
+                .userAgent;
+
+            return u.indexOf("Windows") > -1
+                || u.indexOf("Linux") > -1;
+        }
+
+        function onSign(
+            auth,
+            provider
+        ) {
+            if (nonSafariShit()) {
+                auth.signInWithRedirect(
+                    provider
+                );
+                return;
             }
 
-            function onSign(
-                auth,
+            let divBack = document
+                .getElementById("mainDivBack");
+
+            let titleCheck = document
+                .getElementById("titleCheck");
+
+            divBack.style
+                .visibility = 'hidden';
+
+            titleCheck.style
+                .visibility = 'visible';
+
+            auth.signInWithPopup(
                 provider
-            ) {
-                if (nonSafariShit()) {
-                    auth.signInWithRedirect(
-                        provider
-                    );
-                    return;
-                }
-
-                let divBack = document
-                    .getElementById("mainDivBack");
-
-                let titleCheck = document
-                    .getElementById("mainDivCheckTitle");
-
+            ).catch((error) => {
+                alert(error);
                 divBack.style
-                    .visibility = 'hidden';
-
-                titleCheck.style
                     .visibility = 'visible';
 
-                auth.signInWithPopup(
-                    provider
-                ).catch((error) => {
-                    alert(error);
-                    divBack.style
-                        .visibility = 'visible';
+                titleCheck.style
+                    .visibility = 'hidden';
+            });
+        }
 
-                    titleCheck.style
-                        .visibility = 'hidden';
-                });
-            }
+        function onAuthStateChanged(
+            user
+        ) {
 
-            function onAuthStateChanged(
-                user
-            ) {
+            if (user == null) {
 
-                if (user == null) {
+                let mainDivBack = document
+                    .getElementById("mainDivBack");
 
-                    let mainDivBack = document
-                        .getElementById("mainDivBack");
+                mainDivBack
+                    .style
+                    .visibility = 'visible';
 
-                    mainDivBack
-                        .style
-                        .visibility = 'visible';
-                        
-                    document
-                        .getElementById("mainDivCheckTitle")
-                        .style
-                        .visibility = 'hidden';
+                document
+                    .getElementById("titleCheck")
+                    .style
+                    .visibility = 'hidden';
 
-                    for (var opacity = 0; opacity < 1.1; opacity += 0.01) {
-                        setTimeout(() => {
-                            mainDivBack
-                                .style
-                                .opacity = opacity;
-                        }, 100);
-                    }
-
-                    return;
+                for (var opacity = 0; opacity < 1.1; opacity += 0.01) {
+                    setTimeout(() => {
+                        mainDivBack
+                            .style
+                            .opacity = opacity;
+                    }, 100);
                 }
 
-                window
-                    .location
-                    .href = "createOrder?id=" + user.uid;
+                return;
             }
 
-            window.onload = function () {
+            window
+                .location
+                .href = "createOrder?id=" + user.uid;
+        }
 
-                const firebaseConfig = {
-                    apiKey: "AIzaSyB2sJKaPgcsZObdtKPQ-ZI5oSmXapz7OIQ",
-                    authDomain: "spok-relax-app.firebaseapp.com",
-                }
+        window.onload = function () {
 
-                const app = firebase.initializeApp(
-                    firebaseConfig
-                );
+            const firebaseConfig = {
+                apiKey: "AIzaSyB2sJKaPgcsZObdtKPQ-ZI5oSmXapz7OIQ",
+                authDomain: "spok-relax-app.firebaseapp.com",
+            }
 
-                const auth = app.auth();
+            const app = firebase.initializeApp(
+                firebaseConfig
+            );
 
-                auth.onAuthStateChanged(
-                    onAuthStateChanged
-                );
+            const auth = app.auth();
 
-                let provider = new firebase.auth.OAuthProvider(
-                    'apple.com'
-                );
+            auth.onAuthStateChanged(
+                onAuthStateChanged
+            );
 
-                provider.addScope('email');
-                provider.addScope('name');
+            let provider = new firebase.auth.OAuthProvider(
+                'apple.com'
+            );
 
-                provider.setCustomParameters({
-                    locale: 'ru'
+            provider.addScope('email');
+            provider.addScope('name');
+
+            provider.setCustomParameters({
+                locale: 'ru'
+            });
+
+            document.getElementById('mainDivBtnGet')
+                .addEventListener('click', () => {
+                    onSign(auth, provider);
                 });
 
-                document.getElementById('mainDivBtnGet')
-                    .addEventListener('click', () => {
-                        onSign(auth, provider);
-                    });
-
-            }
-        </script>
-    </body>
+        }
+    </script>
+</body>
 </html>
