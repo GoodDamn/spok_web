@@ -69,6 +69,7 @@
         #titleCheck {
             position: absolute;
             font-size: 5vh;
+            margin-top: 47.5vh;
         }
 
         #mainDivInputEmail {
@@ -82,17 +83,7 @@
             padding: 1.3vh;
         }
 
-        #mainDivTerms {
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        #mainDivPaymentInfo {
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        #mainDivPolicy {
+        #cursoredText {
             cursor: pointer;
             text-decoration: underline;
         }
@@ -127,15 +118,11 @@
                     </h1>
                 </div>
 
-                <div class="center">
+                <div class="center" style="margin-top: 3vh;">
                     <img id="mainDivImage" src="img/meditate.png" />
                 </div>
 
-                <div class="center">
-                    <input id="mainDivInputEmail" type="email" />
-                </div>
-
-                <div class="center">
+                <div class="center" style="margin-top: 10vh;">
                     <a id="mainDivBtnGet">
                         Получить полный доступ
                     </a>
@@ -143,50 +130,47 @@
 
                 <p>
 
-                    <span id="mainDivPaymentInfo"
+                    <span id="cursoredText"
                           onclick="window.location.href='paymentInfo';">Техническая поддержка</span>
                     &amp;
                     <br>
-                    <span id="mainDivTerms"
+                    <span id="cursoredText"
                           onclick="window.location.href = 'terms';">Условия пользования</span>
                     &amp;
                     <br>
-                    <span id="mainDivPolicy"
+                    <span id="cursoredText"
                           onclick="window.location.href = 'policy';">Политика конфиденциальности</span>
 
 
                 </p>
             </div>
 
-            <!--<div id="mainDiv">
-                <div style="display: inline-block; vertical-align: central; justify-content: center;">
-                    <div id="mainDiv">
-                        <h1 id="mainDivTitle">
-                            Необходимо указать почту для отправки чека, чтобы продолжить
-                        </h1>
-                    </div>
-
-                    <div id="mainDiv">
-                        <input type="email" />
-                    </div>
-
-                    <div id="mainDiv">
-                        <a id="mainDivBtnGet">
-                            Продолжить
-                        </a>
-                    </div>
-
-                </div>
-            </div>-->
-
         </div>
 
-    </div>
+        <!--
+        <div style="display: inline-block; vertical-align: central; justify-content: center;">
+            <div id="mainDiv">
+                <h1 id="mainDivTitle">
+                    Необходимо указать почту для отправки чека, чтобы продолжить
+                </h1>
+            </div>
 
-    <div class="center">
+            <div id="mainDiv">
+                <input type="email" />
+            </div>
+
+            <div id="mainDiv">
+                <a id="mainDivBtnGet">
+                    Продолжить
+                </a>
+            </div>
+
+        </div>-->
+
         <p id="titleCheck">
             Проверка...
         </p>
+
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
