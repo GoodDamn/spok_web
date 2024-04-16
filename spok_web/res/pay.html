@@ -17,8 +17,17 @@
             justify-content: center;
         }
 
+        .linearLayout {
+            display: inline-block;
+            vertical-align: central;
+        }
+
         body {
             background-color: #08193A;
+        }
+
+        #emailReceipt {
+            visibility: hidden;
         }
 
         #mainDivBack {
@@ -99,16 +108,12 @@
             padding: 1.3vh;
         }
 
-        #linearLayout {
-            display: inline-block;
-            vertical-align: central;
-        }
     </style>
 </head>
 <body>
 
     <div class="center">
-        <div id="linearLayout">
+        <div class="linearLayout">
             <div id="mainDivBack">
 
                 <div class="center">
@@ -144,29 +149,29 @@
 
                 </p>
             </div>
-
         </div>
 
-        <!--
-        <div style="display: inline-block; vertical-align: central; justify-content: center;">
-            <div id="mainDiv">
-                <h1 id="mainDivTitle">
-                    Необходимо указать почту для отправки чека, чтобы продолжить
-                </h1>
+        <div id="emailReceipt" class="center" style="position: absolute;">
+            <div class="linearLayout">
+                <div class="center" style="margin-top: 28vh; max-width:1200px;">
+                    <h1 id="mainDivTitle">
+                        Необходимо указать почту для отправки чека, чтобы продолжить
+                    </h1>
+                </div>
+
+                <div class="center" style="margin-top: 1vh;">
+                    <input type="email" />
+                </div>
+
+                <div class="center" style="margin-top: 4vh;">
+                    <a id="mainDivBtnGet" style="padding-left: 3vw; padding-right: 3vw;">
+                        Продолжить
+                    </a>
+                </div>
+
             </div>
-
-            <div id="mainDiv">
-                <input type="email" />
-            </div>
-
-            <div id="mainDiv">
-                <a id="mainDivBtnGet">
-                    Продолжить
-                </a>
-            </div>
-
-        </div>-->
-
+        </div>
+        
         <p id="titleCheck">
             Проверка...
         </p>
