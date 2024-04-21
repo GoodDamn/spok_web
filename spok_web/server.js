@@ -50,11 +50,11 @@ let ssl = {
 
 router.set("/createOrder", (res, url) => {
 
-    let userId = getUserIdParams(
-        url
-    );
+    let par = getParams(url);
 
-    console.log("CREATE_ORDER:", userId);
+    let userId = par.get("i");
+    let email = par.get("e");
+    console.log("CREATE_ORDER:", userId, email);
 
     if (userId == null) {
         res.end("No user id");
@@ -65,17 +65,12 @@ router.set("/createOrder", (res, url) => {
         userId, (payId) => {
             console.log("CREATE_ORDER: USER_PAY_ID", payId);
             if (payId == null) { // No pay
-                config.createPayment(url.host, "grigorydum@gmail.com", (orderId, confirm_url) => {
-                    config.setUserData(
-                        userId, {
-                        "pteid": orderId
-                    }, () => {
-                        res.writeHead(302, {
-                            'Location': confirm_url
-                        });
-                        res.end();
-                    });
-                });
+                moveToPayment(
+                    url.host,
+                    email,
+                    userId,
+                    res
+                );
                 return;
             }
 
@@ -97,18 +92,12 @@ router.set("/createOrder", (res, url) => {
                         }
 
                         // premium expired
-
-                        config.createPayment(url.host, "grigorydum@gmail.com" ,(orderId, confirm_url) => {
-                            config.setUserData(
-                                userId, {
-                                "pteid": orderId
-                            }, () => {
-                                res.writeHead(302, {
-                                    'Location': confirm_url
-                                });
-                                res.end();
-                            });
-                        });
+                        moveToPayment(
+                            url.host,
+                            email,
+                            userId,
+                            res
+                        );
 
                         return;
                     }
@@ -123,17 +112,12 @@ router.set("/createOrder", (res, url) => {
                         return;
                     }
 
-                    config.createPayment(url.host, (orderId, confirm_url) => {
-                        config.setUserData(
-                            userId, {
-                            "pteid": orderId
-                        }, () => {
-                            res.writeHead(302, {
-                                'Location': confirm_url
-                            });
-                            res.end();
-                        });
-                    });
+                    moveToPayment(
+                        url.host,
+                        email,
+                        userId,
+                        res
+                    );
                 });
         }
     )
@@ -256,36 +240,43 @@ function loadResources(
         });
 }
 
-function getUserIdParams(
+function moveToPayment(
+    host,
+    email,
+    userId,
+    res
+) {
+    config.createPayment(host, email, (orderId, confirm_url) => {
+        config.setUserData(
+            userId, {
+            "pteid": orderId
+        }, () => {
+            res.writeHead(302, {
+                'Location': confirm_url
+            });
+            res.end();
+        });
+    });
+}
+
+function getParams(
     url
 ) {
-    let params = url.params;
+    let data = new Map();
 
-    let indexId = params.lastIndexOf(
-        "i="
-    );
+    url.params.split("&").forEach((param) => {
+        let index = param.indexOf("=");
+        let key = param.substring(
+            0,
+            index
+        );
+        let value = param.substring(
+            index+1
+        );
+        data.set(key, value);
+    });
 
-    var indexAmp = params.indexOf(
-        "&"
-    )
-
-    if (indexId == -1) {
-        return null;
-    }
-
-    if (indexAmp == -1) {
-        indexAmp = params.length
-    }
-
-    let userId = params.substring(
-        indexId + 3, indexAmp
-    )
-
-    if (userId.length < 15) {
-        return null;
-    }
-
-    return userId;
+    return data;
 }
 
 function mimeType(fileName) {
