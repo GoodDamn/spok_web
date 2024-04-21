@@ -150,7 +150,7 @@
                 </p>
             </div>
         </div>
-
+            
         <div id="emailReceipt" class="center" style="position: absolute;">
             <div class="linearLayout">
                 <div class="center" style="margin-top: 28vh; max-width:1200px;">
@@ -185,6 +185,22 @@
 
         var titleCheck;
 
+        function getEmailReceipt() {
+            return document.getElementById(
+                "emailReceipt"
+            );
+        }
+
+        function getTitleCheck() {
+            return document
+                .getElementById("titleCheck")
+        }
+
+        function getMainDivBack() {
+            return document
+                .getElementById("mainDivBack");
+        }
+
         function nonSafariShit() {
             let u = navigator
                 .userAgent;
@@ -204,11 +220,9 @@
                 return;
             }
 
-            let divBack = document
-                .getElementById("mainDivBack");
+            let divBack = getMainDivBack();
 
-            let titleCheck = document
-                .getElementById("titleCheck");
+            let titleCheck = getTitleCheck();
 
             divBack.style
                 .visibility = 'hidden';
@@ -234,15 +248,13 @@
 
             if (user == null) {
 
-                let mainDivBack = document
-                    .getElementById("mainDivBack");
+                let mainDivBack = getMainDivBack();
 
                 mainDivBack
                     .style
                     .visibility = 'visible';
 
-                document
-                    .getElementById("titleCheck")
+                getTitleCheck()
                     .style
                     .visibility = 'hidden';
 
@@ -257,9 +269,24 @@
                 return;
             }
 
+            let email = user.email;
+            console.log("email:", email)
+
+            if (email.includes("@privaterelay.appleid.com")) {
+                let t = getTitleCheck();
+
+                t.style.visibility = "visible";
+
+                let divContent = getEmailReceipt();
+
+                divContent.style.visibility = "visible";
+
+                return;
+            }
+
             window
                 .location
-                .href = "createOrder?id=" + user.uid;
+                .href = "createOrder?i=" + user.uid + "&e=" + email;
         }
 
         window.onload = function () {

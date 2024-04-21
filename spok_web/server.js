@@ -57,15 +57,25 @@ router.set("/createOrder", (res, url) => {
     console.log("CREATE_ORDER:", userId);
 
     if (userId == null) {
-        res.end();
+        res.end("No user id");
         return;
     }
 
     config.getUserPaymentId(
         userId, (payId) => {
             console.log("CREATE_ORDER: USER_PAY_ID", payId);
-            if (payId == null) {
-                res.end();
+            if (payId == null) { // No pay
+                config.createPayment(url.host, "grigorydum@gmail.com", (orderId, confirm_url) => {
+                    config.setUserData(
+                        userId, {
+                        "pteid": orderId
+                    }, () => {
+                        res.writeHead(302, {
+                            'Location': confirm_url
+                        });
+                        res.end();
+                    });
+                });
                 return;
             }
 
@@ -88,7 +98,7 @@ router.set("/createOrder", (res, url) => {
 
                         // premium expired
 
-                        config.createPayment(url.host, (orderId, confirm_url) => {
+                        config.createPayment(url.host, "grigorydum@gmail.com" ,(orderId, confirm_url) => {
                             config.setUserData(
                                 userId, {
                                 "pteid": orderId
@@ -252,7 +262,7 @@ function getUserIdParams(
     let params = url.params;
 
     let indexId = params.lastIndexOf(
-        "id"
+        "i="
     );
 
     var indexAmp = params.indexOf(
