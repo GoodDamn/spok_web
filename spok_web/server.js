@@ -212,7 +212,7 @@ https.createServer(ssl, function (req, res) {
     );
 
     if (node == undefined) {
-        router.get("/pay.html")(res, url.path);
+        router.get("/main.html")(res, url.path);
         return;
     }
 
