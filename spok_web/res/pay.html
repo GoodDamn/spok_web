@@ -22,6 +22,19 @@
             vertical-align: central;
         }
 
+        .accentButton {
+            color: #ffffff;
+            cursor: pointer;
+            background-color: #4F66E8;
+            padding: 3.2vh;
+            border-radius: 3vh;
+            font-family: "Open Sans", sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 2.8vh;
+            text-decoration: none;
+        }
+
         body {
             background-color: #08193A;
         }
@@ -47,19 +60,6 @@
         #mainDivImage {
             width: 40vh;
             height: 33vh;
-        }
-
-        #mainDivBtnGet {
-            color: #ffffff;
-            cursor: pointer;
-            background-color: #4F66E8;
-            padding: 3.2vh;
-            border-radius: 3vh;
-            font-family: "Open Sans", sans-serif;
-            font-style: normal;
-            font-weight: 700;
-            font-size: 2.8vh;
-            text-decoration: none;
         }
 
         #mainDivBtnGet:hover {
@@ -107,83 +107,16 @@
             font-size: 2.2vh;
             padding: 1.3vh;
         }
-
     </style>
 </head>
 <body>
-
-    <div class="center">
-        <div class="linearLayout">
-            <div id="mainDivBack">
-
-                <div class="center">
-                    <h1 id="mainDivTitle">
-                        Подписка SPOK<br>1 месяц<br>
-                        169 RUB
-                    </h1>
-                </div>
-
-                <div class="center" style="margin-top: 3vh;">
-                    <img id="mainDivImage" src="img/meditate.png" />
-                </div>
-
-                <div class="center" style="margin-top: 10vh;">
-                    <a id="mainDivBtnGet">
-                        Получить полный доступ
-                    </a>
-                </div>
-
-                <p>
-
-                    <span id="cursoredText"
-                          onclick="window.location.href='paymentInfo';">Техническая поддержка</span>
-                    &amp;
-                    <br>
-                    <span id="cursoredText"
-                          onclick="window.location.href = 'terms';">Условия пользования</span>
-                    &amp;
-                    <br>
-                    <span id="cursoredText"
-                          onclick="window.location.href = 'policy';">Политика конфиденциальности</span>
-
-
-                </p>
-            </div>
-        </div>
-            
-        <div id="emailReceipt" class="center" style="position: absolute;">
-            <div class="linearLayout">
-                <div class="center" style="margin-top: 28vh; max-width:1200px;">
-                    <h1 id="mainDivTitle">
-                        Необходимо указать почту для отправки чека, чтобы продолжить
-                    </h1>
-                </div>
-
-                <div class="center" style="margin-top: 1vh;">
-                    <input type="email" />
-                </div>
-
-                <div class="center" style="margin-top: 4vh;">
-                    <a id="mainDivBtnGet" style="padding-left: 3vw; padding-right: 3vw;">
-                        Продолжить
-                    </a>
-                </div>
-
-            </div>
-        </div>
-        
-        <p id="titleCheck">
-            Проверка...
-        </p>
-
-    </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
 
     <script type="module">
 
-        var titleCheck;
+        let userId;
 
         function getEmailReceipt() {
             return document.getElementById(
@@ -199,6 +132,61 @@
         function getMainDivBack() {
             return document
                 .getElementById("mainDivBack");
+        }
+
+        function getBtnCompleteEmail() {
+            return document
+                .getElementById("btnCompleteEmail");
+        }
+
+        function getEditTextEmail() {
+            return document
+                .getElementById("editTextEmail");
+        }
+
+        function isValidEmail(
+            inp
+        ) {
+            return inp
+                .toLowerCase()
+                .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                );
+        }
+
+        function onClickBtnCompleteEmail() {
+            let v = getEditTextEmail()
+                .value;
+
+            if (v.length <= 4) {
+                alert("Недостаточно символов");
+                return;
+            }
+
+            if (!isValidEmail(v)) {
+                alert("Не соответствует формату");
+                return;
+            }
+
+            redirectCreatePayment(
+                v
+            );
+        }
+
+        function redirectCreatePayment(
+            email
+        ) {
+            redirect(
+                "createOrder?i=" + userId + "&e=" + email
+            );
+        }
+
+        function redirect(
+            url
+        ) {
+            window
+                .location
+                .href = url;
         }
 
         function nonSafariShit() {
@@ -270,12 +258,10 @@
             }
 
             let email = user.email;
-            console.log("email:", email)
-
+            userId = user.uid;
             if (email.includes("@privaterelay.appleid.com")) {
                 let t = getTitleCheck();
-
-                t.style.visibility = "visible";
+                t.style.visibility = "hidden";
 
                 let divContent = getEmailReceipt();
 
@@ -284,9 +270,9 @@
                 return;
             }
 
-            window
-                .location
-                .href = "createOrder?i=" + user.uid + "&e=" + email;
+            redirectCreatePayment(
+                email
+            )
         }
 
         window.onload = function () {
@@ -317,6 +303,9 @@
                 locale: 'ru'
             });
 
+            getBtnCompleteEmail()
+                .addEventListener("click", onClickBtnCompleteEmail);
+
             document.getElementById('mainDivBtnGet')
                 .addEventListener('click', () => {
                     onSign(auth, provider);
@@ -324,5 +313,75 @@
 
         }
     </script>
+
+    <div class="center">
+        <div class="linearLayout">
+            <div id="mainDivBack">
+
+                <div class="center">
+                    <h1 id="mainDivTitle">
+                        Подписка SPOK<br>1 месяц<br>
+                        169 RUB
+                    </h1>
+                </div>
+
+                <div class="center" style="margin-top: 3vh;">
+                    <img id="mainDivImage" src="img/meditate.png" />
+                </div>
+
+                <div class="center" style="margin-top: 10vh;">
+                    <a id="mainDivBtnGet" class="accentButton">
+                        Получить полный доступ
+                    </a>
+                </div>
+
+                <p>
+
+                    <span id="cursoredText"
+                          onclick="window.location.href='paymentInfo';">Техническая поддержка</span>
+                    &amp;
+                    <br>
+                    <span id="cursoredText"
+                          onclick="window.location.href = 'terms';">Условия пользования</span>
+                    &amp;
+                    <br>
+                    <span id="cursoredText"
+                          onclick="window.location.href = 'policy';">Политика конфиденциальности</span>
+
+
+                </p>
+            </div>
+        </div>
+
+        <div id="emailReceipt" class="center" style="position: absolute;">
+            <div class="linearLayout">
+                <div class="center" style="margin-top: 28vh; max-width:1200px;">
+                    <h1 id="mainDivTitle">
+                        Необходимо указать почту для отправки чека, чтобы продолжить
+                    </h1>
+                </div>
+
+                <div class="center" style="margin-top: 1vh;">
+                    <input id="editTextEmail" type="email" />
+                </div>
+
+                <div class="center" style="margin-top: 4vh;">
+                    <a id="btnCompleteEmail"
+                       class="accentButton"
+                       style="padding-left: 3vw; padding-right: 3vw;">
+                        Продолжить
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <p id="titleCheck">
+            Проверка...
+        </p>
+
+    </div>
+
+
 </body>
 </html>

@@ -88,7 +88,8 @@ router.set("/createOrder", (res, url) => {
                         if (currentTime - createdTime < 2678400) {
                             // with premium
                             redirection(
-                                "https://" + url.host + "/already"
+                                "https://" + url.host + "/already",
+                                res
                             )
                             return;
                         }
@@ -108,7 +109,8 @@ router.set("/createOrder", (res, url) => {
 
                     if (status === 'pending' || status === 'waiting_for_capture') {
                         redirection(
-                            payment['confirmation']['confirmation_url']
+                            payment['confirmation']['confirmation_url'],
+                            res
                         );
                         return;
                     }
