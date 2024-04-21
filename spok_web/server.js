@@ -132,6 +132,10 @@ router.set("/createOrder", (res, url) => {
     )
 });
 
+router.set("/already", (res, url) => {
+    router.get("/already.html")(res, url);
+});
+
 router.set("/returnPayment", (res, url) => {
     router.get("/returnPayment.html")(res, url);
 });
