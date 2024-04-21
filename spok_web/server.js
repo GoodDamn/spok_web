@@ -87,7 +87,9 @@ router.set("/createOrder", (res, url) => {
 
                         if (currentTime - createdTime < 2678400) {
                             // with premium
-                            res.end();
+                            redirection(
+                                "https://" + url.host + "/already"
+                            )
                             return;
                         }
 
@@ -105,10 +107,9 @@ router.set("/createOrder", (res, url) => {
                     let status = payment['status'];
 
                     if (status === 'pending' || status === 'waiting_for_capture') {
-                        res.writeHead(302, {
-                            'Location': payment['confirmation']['confirmation_url']
-                        });
-                        res.end();
+                        redirection(
+                            payment['confirmation']['confirmation_url']
+                        );
                         return;
                     }
 
@@ -118,7 +119,15 @@ router.set("/createOrder", (res, url) => {
                         userId,
                         res
                     );
-                });
+            }, (errorJson) => {
+                    console.log("PAYMENT_INFO_ERROR:", errorJson);
+                    moveToPayment(
+                        url.host,
+                        email,
+                        userId,
+                        res
+                    );
+            });
         }
     )
 });
@@ -144,10 +153,10 @@ router.set("/paymentInfo", (res, url) => {
 });
 
 http.createServer(function (req, res) {
-    res.writeHead(301, {
-        'Location': 'https://' + req.rawHeaders[1] + req.url
-    });
-    res.end();
+    redirection(
+        'https://' + req.rawHeaders[1] + req.url,
+        res
+    )
 }).listen(8080);
 
 https.createServer(ssl, function (req, res) {
@@ -206,6 +215,16 @@ https.createServer(ssl, function (req, res) {
     node(res, url);
 }).listen(4443);
 
+function redirection(
+    url,
+    res
+) {
+    res.writeHead(302, {
+        'Location': url
+    });
+    res.end();
+}
+
 function loadResources(
     resourceMap,
     path
@@ -251,10 +270,10 @@ function moveToPayment(
             userId, {
             "pteid": orderId
         }, () => {
-            res.writeHead(302, {
-                'Location': confirm_url
-            });
-            res.end();
+            redirection(
+                confirm_url,
+                res
+            );
         });
     });
 }
